@@ -1,0 +1,12 @@
+<div style="width: 100%; background-color: gray"><div style="width: <%= @progress.to_i %>%; background-color: black; height: 20px"></div></div>
+<%= form_for @profile, url: wizard_path, method: :put do |f| %>
+    <%= f.label :job_title %>
+    <%= f.text_field :job_title %>
+    <%= f.object.errors.full_messages_for(:job_title)&.first %>
+
+    <%= f.label :company %>
+    <%= f.text_field :company %>
+    <%= f.object.errors.full_messages_for(:company)&.first %>
+
+    <%= f.submit 'Submit', name: "submit" %>
+<% end %>

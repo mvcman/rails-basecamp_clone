@@ -1,0 +1,17 @@
+<div style="width: 100%; background-color: gray"><div style="width: <%= @progress.to_i %>%; background-color: black; height: 20px"></div></div>
+<%= form_for @profile, url: wizard_path, method: :put do |f| %>
+    <%= wizard_path %>
+    <%= f.label :university %>
+    <%= f.text_field :university %>
+    <%= f.object.errors.full_messages_for(:university)&.first %>
+
+    <%= f.label :level_of_education %>
+    <%= f.text_field :level_of_education %>
+    <%= f.object.errors.full_messages_for(:level_of_education)&.first %>
+
+    <%= f.label :cgpa %>
+    <%= f.text_field :cgpa %>
+    <%= f.object.errors.full_messages_for(:cgpa)&.first %>
+
+    <%= f.submit 'Next', name: "next" %>
+<% end %>
