@@ -1,0 +1,7 @@
+<%= turbo_frame_tag "template_#{template.id}" do %>
+    <div class="p-4 flex flex-col rounded-md">
+        <h2><%= template.name %></h2>
+        <p>Created by: <%= template.user.profiles.first_name %></p>
+        <p>Created at: <%= template.created_at %></p>
+    </div>
+<% end %>

@@ -1,0 +1,7 @@
+<%= turbo_stream.remove @task %>
+<%= turbo_stream.prepend "tasks_completed", partial: "tasks/task", locals: { task: @task } %>
+<%= turbo_stream.replace "tasks_count" do %>
+    <%= turbo_frame_tag "tasks_count" do %>
+        <div class="text gray-300"><%= @tasks.filter {|t| t.status.downcase == 'completed'}.count %> / <%= @tasks.count %></div>
+    <% end %>
+<% end %>

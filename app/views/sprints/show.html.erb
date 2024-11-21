@@ -1,0 +1,42 @@
+<%= render @sprint %>
+
+<%= turbo_stream_from current_tenant, @sprint, "tasks" %>
+<div class="flex items-center justify-between py-4">
+    <h2 class="text-lg font-bold">Tasks</h2> 
+    <%= turbo_frame_tag "tasks_count" do %>
+        <div class="text gray-300"><%= @tasks.filter {|t| t.status.downcase == 'completed'}.count %> / <%= @tasks.count %></div>
+    <% end %>
+</div>
+
+<%= turbo_frame_tag "tasks_notification_count2" do %>
+    <%= @unread.count >= 5 ? "5+" : @unread.count %>
+<% end %>
+
+<%
+=begin%>
+ <%= turbo_stream_from current_tenant, @sprint, "tasks_completed" %> 
+<%
+=end%>
+
+<%= turbo_frame_tag "tasks", class: "w-full grid grid-cols-1 gap-2" do %>
+    <% @tasks.filter {|t| t.status.downcase == 'pending'}.each do |task| %>
+        <%= render "tasks/task", task: task %>
+    <% end %>
+<% end %>
+
+<%= turbo_frame_tag Task.new do %>
+    <% if @tasks.none? %>
+        <%= render "tasks/empty_state", sprint: @sprint %>
+    <% end %>
+    <% if !@tasks.none? %>
+        <div class="py-2">
+            <%= link_to "Add task", new_sprint_task_path(@sprint), class: "border border-blue-600 rounded-md py-1 px-2 text-sm text-blue-600" %>
+        </div>
+    <% end %>
+<% end %>
+
+<%= turbo_frame_tag "tasks_completed", class: "w-full grid grid-cols-1 gap-2" do %>
+    <% @tasks.filter {|t| t.status.downcase == 'completed'}.each do |task| %>
+        <%= render "tasks/task", task: task %>
+    <% end %>
+<% end %>

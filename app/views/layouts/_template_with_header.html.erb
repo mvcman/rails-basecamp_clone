@@ -1,0 +1,48 @@
+<%= content_for :header do %>
+    <div class="w-full bg-black p-2 flex items-center justify-between">
+      <div class="text-white">Welcome <%= current_user.email %></div>
+      <div class="">
+        <% if current_user %>
+            <button class="w-8 h-8 text-base font-medium bg-red-500 text-white rounded-full" data-popover-target="notifications" type="button" id="notification_count">
+                <%= @unread.count >= 5 ? "5+" : @unread.count %>
+            </button>
+            <ul class="flex flex-col absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 p-4" aria-labelledby="navbarDropdown" data-popover id="notifications" role="tooltip">
+                <%= turbo_stream_from current_user, "notification_channel2" %>
+                <%= turbo_frame_tag "notification_channel2" do %>
+                    <% @unread.each do |notification| %>
+                        <%= render 'layouts/notification', notification: notification, seen: false %>
+                    <% end %>
+                <% end %>
+                <% if @read.count > 0 && @unread.count > 0 %>
+                    <li>
+                        <hr class="w-full h-1 bg-gray-500">
+                    </li>
+                <% elsif @read.count + @unread.count == 0 %>
+                    <li class="dropdown-item">
+                        No notifications yet.
+                    </li>
+                <% end %>
+                <% @read.each do |notification| %>
+                    <%= render 'layouts/notification', notification: notification, seen: true %>
+                <% end %>
+            </ul>
+        <% end %>
+      </div>
+      <div class="flex items-center space-x-2">
+        <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "border border-white rounded-md py-1 px-2 text-sm text-white" %> 
+        <%= button_to "Profile", profiles_path, class: "border border-white rounded-md py-1 px-2 text-sm text-white" %> 
+      </div>
+    </div>
+<% end %>
+<%= content_for :navbar do %>
+    <div class="bg-blue-600 flex items-center space-x-2">
+        <%= link_to "Sprints", sprints_path, class: params[:controller] == "sprints" ? "p-2 text-sm border-b-2 border-yellow-400 text-white font-bold" : "px-2 py-1 text-sm text-gray-300" %>
+        <%= link_to "Templates", templates_path, class: params[:controller] == "templates" ? "p-2 text-sm border-b-2 border-yellow-400 text-white font-bold" : "px-2 py-1 text-sm text-gray-300" %>
+        <%= link_to "Standups", standups_path, class: params[:controller] == "standups" ? "p-2 text-sm border-b-2 border-yellow-400 text-white font-bold" : "px-2 py-1 text-sm text-gray-300" %>
+    </div>
+<% end %>
+<%= content_for :footer do %>
+    <div class="w-full bg-black text-white flex items-center justify-center p-2">
+        <p>Published by Udyamo.com</p>
+    </div>
+<% end %>

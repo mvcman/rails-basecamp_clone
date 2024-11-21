@@ -1,0 +1,6 @@
+<%= turbo_frame_tag @sprint do %>
+    <div class="">
+        <h2 class="text-lg font-bold">Edit <span class="font-bold text-blue-600"><%= @sprint.name %></span> Sprint</h2>
+        <%= render "form", sprint: @sprint %>
+    </div>
+<% end %>

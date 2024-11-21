@@ -1,0 +1,29 @@
+<%= turbo_frame_tag dom_id(task) do %>
+    <div class=" flex flex-row items-center justify-between" data-controller="task">
+        <div class="flex flex-row space-x-2">
+            <% if task.status == "pending" %>
+                <%= form_with url: mark_complete_sprint_task_path(task.sprint_id, task), method: :patch, class: "p-0 m-0" do |form| %>
+                    <%= form.check_box :status, { checked: task.status == "completed", data: { action: "task#handleSubmit" }, class: "rounded-sm border-2 border-black" }, true, false %>
+                <% end %>
+            <% else %>
+                <%= form_with url: mark_pending_sprint_task_path(task.sprint_id, task), method: :patch, class: "p-0 m-0" do |form| %>
+                    <%= form.check_box :status, { checked: task.status == "completed", data: { action: "task#handleSubmit" }, class: "rounded-sm" }, true, false %>
+                <% end %>
+            <% end %>
+            <div class="flex flex-col space-y-1">
+                <h4 class="font-bold"><%= task.name %></h4>
+                <p class=""><%= task.desciption %></p>
+                <p class=""><%= task.users.map {|u| u.full_name }.join(", ") %></p>
+                <p class=""><%= task.updated_at %></p>
+                <p class=""><%= Time.zone.today %>---<%= Time.zone.now %>
+            </div>  
+        </div>
+        <% if task.status != "completed" %>
+            <div class="flex items-center space-x-2 pt-4">
+                <%= link_to "Edit", edit_sprint_task_path(task.sprint_id, task), class: "py-1 px-4 border border-blue-600 text-sm sm:text-md text-blue-600 rounded-md font-inter font-medium cursor-pointer" %>
+                
+                <%= button_to "Delete", sprint_task_path(task.sprint_id, task), method: :delete, class: "py-1 px-4 border border-blue-600 bg-blue-600 text-sm sm:text-md text-white rounded-md font-inter font-medium cursor-pointer" %> 
+            </div>
+        <% end %>
+    </div>
+<% end %>

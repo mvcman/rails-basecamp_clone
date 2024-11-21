@@ -45,6 +45,8 @@ gem "devise"
 
 gem "wicked"
 
+gem "select2-rails"
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -69,3 +71,9 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "tailwindcss-rails", "~> 2.6"
+
+gem "noticed", "= 2.2"
+
+gem "public_activity", "~> 3.0"

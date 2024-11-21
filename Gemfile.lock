@@ -150,10 +150,17 @@ GEM
     nio4r (2.7.0)
     nokogiri (1.16.0-x86_64-linux)
       racc (~> 1.4)
+    noticed (2.2.0)
+      rails (>= 6.1.0)
     orm_adapter (0.5.0)
     pg (1.5.4)
     psych (5.1.2)
       stringio
+    public_activity (3.0.1)
+      actionpack (>= 6.1.0)
+      activerecord (>= 6.1)
+      i18n (>= 0.5.0)
+      railties (>= 6.1.0)
     public_suffix (5.0.4)
     puma (6.4.2)
       nio4r (~> 2.0)
@@ -211,6 +218,7 @@ GEM
     rexml (3.2.6)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
+    select2-rails (4.0.13)
     selenium-webdriver (4.17.0)
       base64 (~> 0.2)
       rexml (~> 3.2, >= 3.2.5)
@@ -226,6 +234,8 @@ GEM
     stimulus-rails (1.3.3)
       railties (>= 6.0.0)
     stringio (3.1.0)
+    tailwindcss-rails (2.6.5-x86_64-linux)
+      railties (>= 7.0.0)
     thor (1.3.0)
     timeout (0.4.1)
     turbo-rails (1.5.0)
@@ -262,13 +272,17 @@ DEPENDENCIES
   devise
   importmap-rails
   jbuilder
+  noticed (= 2.2)
   pg (~> 1.1)
+  public_activity (~> 3.0)
   puma (>= 5.0)
   rails (~> 7.1.2)
   redis (>= 4.0.1)
+  select2-rails
   selenium-webdriver
   sprockets-rails
   stimulus-rails
+  tailwindcss-rails (~> 2.6)
   turbo-rails
   tzinfo-data
   web-console

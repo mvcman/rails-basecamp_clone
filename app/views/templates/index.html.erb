@@ -1,0 +1,164 @@
+<%
+=begin%>
+ <%= render "layouts/template_with_header" %>
+<div class="flex items-center justify-between">
+    <h2 class="text-lg font-bold">Templates</h2>
+    <%= link_to "Create New", new_template_path, data: { turbo_frame: "new_template" }, class: "border border-blue-600 rounded-md py-1 px-2 text-sm text-blue-600" %>
+</div>
+
+<%= turbo_frame_tag "new_template" do %>
+    <% if @templates.none? %>
+        <%= render "empty_state" %>
+    <% end %>
+<% end %>
+
+<%= turbo_stream_from current_tenant, "templates" %>
+
+<%= turbo_frame_tag "templates" do %>
+    <div class="w-full grid grid-cols-3 flex-wrap">
+        <% @templates.each do |template| %>
+            <%= render "template" %>
+        <% end %>
+    </div>
+<% end %> 
+<%
+=end%>
+
+
+<%
+=begin%>
+ <div class="week-grid">
+  <div class="day">Monday</div>
+  <div class="day">Tuesday</div>
+  <div class="day">Wednesday</div>
+  <div class="day">Thursday</div>
+  <div class="day">Friday</div>
+  <div class="day">Saturday</div>
+  <div class="day">Sunday</div>
+
+  <!-- Example of an event spanning 2 days -->
+  <div class="event" style="grid-column: 2 / span 2;">
+    Leave
+  </div>
+  <div class="event" style="grid-column: 2 / span 2;">
+    Leave
+  </div>
+  <div class="event" style="grid-column: 4 / span 6;">
+    Leave
+  </div>
+</div>  
+<%
+=end%>
+<%
+=begin%>
+ <div class="week-grid">
+  <div class="day">Monday</div>
+  <div class="day">Tuesday</div>
+  <div class="day">Wednesday</div>
+  <div class="day">Thursday</div>
+  <div class="day">Friday</div>
+  <div class="day">Saturday</div>
+  <div class="day">Sunday</div>
+
+  <!-- Example of an event spanning 2 days -->
+  <div class="event" style="grid-column: 2 / span 2;">
+    Leave
+  </div>
+  <div class="event" style="grid-column: 4 / span 6;">
+    Leave
+  </div>
+</div>  
+<%
+=end%>
+
+<%
+=begin%>
+ <% first_day_of_month = Date.new(2024, 8, 1).wday %>
+<% days_in_month = Time.days_in_month(8, 2024) %>
+<%= first_day_of_month %>
+<%= days_in_month %>
+<div class="month-grid">
+  <div class="day-header">Sunday</div>
+  <div class="day-header">Monday</div>
+  <div class="day-header">Tuesday</div>
+  <div class="day-header">Wednesday</div>
+  <div class="day-header">Thursday</div>
+  <div class="day-header">Friday</div>
+  <div class="day-header">Saturday</div>
+
+  <!-- Days of the month (1-31) -->
+    <% first_day_of_month.times do %>
+        <div class="day empty"></div>
+    <% end %>
+
+    <!-- Days of the month -->
+    <% (1..days_in_month).each do |day| %>
+        <div class="day"><%= day %></div>
+    <% end %>
+    <div class="event" style="grid-row: 4; grid-column: 5 / span 4;">
+        My first leave
+    </div>
+    <div class="event" style="grid-row: 4; grid-column: 3 / span 1;">
+        My second leave
+    </div>
+</div> 
+<%
+=end%>
+
+<%
+=begin%>
+ <div class="weekly-calendar">
+  <div class="week-header">
+    <div class="day">Sunday</div>
+    <div class="day">Monday</div>
+    <div class="day">Tuesday</div>
+    <div class="day">Wednesday</div>
+    <div class="day">Thursday</div>
+    <div class="day">Friday</div>
+    <div class="day">Saturday</div>
+  </div>
+  <div class="week-grid">
+    <% 24.times do |hour| %>
+      <% 7.times do |day| %>
+        <div class="hour-slot" data-hour="<%= hour %>" data-day="<%= day %>"></div>
+      <% end %>
+    <% end %>
+  </div>
+</div> 
+<%
+=end%>
+
+<% @appointments = { Date.today => [{ :date => Date.today, :from => "02:00", :to => "05:00" }], Date.today + 3.days => [{ :date => Date.today + 3.days, :from => "13:00", :to => "15:00" }] } %>
+<div class="calendar-container">
+  <div class="hours-container">
+    <p>Days</p>
+    <% (0..23).each do |hour| %>
+      <div class="hour-label">
+        <span class=""><%= format('%02d:00', hour) %></span>
+        
+      </div>
+    <% end %>
+  </div>
+
+  <div class="week-container overflow-x-auto">
+
+    <% (Date.today..Date.today + 28).each do |date| %>
+      <div class="day-column">
+        
+        <%= date.strftime("%A, %d") %> 
+        <% (0..23).each do |hour| %>
+            <div class="hour-label">
+              <% if DateTime.now.hour >= hour+1 && DateTime.now.hour <= hour + 2 %>
+                <div class="current-time-line"></div>
+              <% end %>
+            </div>
+        <% end %> 
+        
+        <% @appointments[date].to_a.each do |d|%>
+            <div class="appointment" style="grid-row-start: <%= d[:from].to_i + 2 %>; grid-row-end: <%= d[:to].to_i + 2 %>;"></div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+

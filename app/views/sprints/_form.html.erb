@@ -1,0 +1,32 @@
+<%= form_with(model: sprint, class: "flex flex-col space-y-2 w-1/2 shadow-md rounded-md p-4") do |form| %>
+    <% if sprint.errors.any? %>
+        <div class="text-red-600">
+            <h2><%= pluralize(sprint.errors.count, "error") %> prohibited this sprint from being saved:</h2>
+        </div>
+        <ul>
+            <% sprint.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+            <% end %>
+        </ul>
+    <% end %>
+
+    <div class="">
+        <%= form.label :name, class: "block" %>
+        <%= form.text_field :name, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-md rounded-lg focus:border-blue-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-600" %>
+    </div>
+
+    <div class="">
+        <%= form.label :start_date, class: "block" %>
+        <%= form.date_field :start_date, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-md rounded-lg focus:border-blue-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-600" %>
+    </div>
+
+    <div class="">
+        <%= form.label :end_date, class: "block" %>
+        <%= form.date_field :end_date, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-md rounded-lg focus:border-blue-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-600" %>
+    </div>
+    <div class="">
+        <%= form.submit "Save", class: "py-2 px-4 bg-blue-600 text-sm sm:text-md text-white rounded-md font-inter font-medium cursor-pointer" %>
+        <%= link_to "Cancel", sprints_path, class: "py-2 px-4 bg-blue-600 text-sm sm:text-md text-white rounded-md font-inter font-medium cursor-pointer" %>
+    </div>
+    
+<% end %>

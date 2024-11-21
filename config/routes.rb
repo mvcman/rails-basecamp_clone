@@ -8,5 +8,21 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   resources :profiles
+  resources :tenants, only: [:new, :create, :edit, :update]
+  resources :sprints do
+    resources :tasks do
+      member do
+        patch :mark_complete 
+        patch :mark_pending
+      end
+    end 
+  end
+
+  resources :standups 
+  resources :templates do 
+    resources :questions 
+  end
+  get "/users", to: "users#index"
+  get "/selected_users", to: "users#selected_users"
   root "home#index"
 end

@@ -29,3 +29,12 @@
 
 en:
   hello: "Hello world"
+  public_activity:
+    sprint:
+      create: 'Created this sprint'
+      update: 'Updated the sprint'
+      destroy: 'Destroy the sprint'
+    task:
+      create: 'Created this sprint'
+      update: 'Updated the sprint'
+      destroy: 'Destroy the sprint'

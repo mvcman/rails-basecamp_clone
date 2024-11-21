@@ -1,0 +1,7 @@
+<%= form_for tenant, method: :post do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    <%= f.object.errors.full_messages_for(:name)&.first %>
+
+    <%= f.submit 'Submit', name: "Submit" %>
+<% end %>

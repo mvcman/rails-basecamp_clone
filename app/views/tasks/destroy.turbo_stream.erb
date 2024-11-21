@@ -1,0 +1,13 @@
+<%= turbo_stream.remove @task %>
+<%= turbo_stream.replace "tasks_count" do %>
+    <%= turbo_frame_tag "tasks_count" do %>
+        <div class="text gray-300"><%= @tasks.filter {|t| t.status.downcase == 'completed'}.count %> / <%= @tasks.count %></div>
+    <% end %>
+<% end %>
+<% unless @tasks.exists? %>
+    <%= turbo_stream.replace Task.new do %>
+        <%= turbo_frame_tag Task.new do %>
+            <%= render "tasks/empty_state", sprint: @sprint %>
+        <% end %>
+    <% end %>
+<% end %>

@@ -1,0 +1,2 @@
+class TeamSetting < ApplicationRecord
+end

@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MultiStepForm</title>
+    <title><%= content_for(:title) || "Sprints" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <%
+=begin%>
+ <audio id="notificationSound">
+      <source src="demo.mp3" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio> 
+<%
+=end%>
+    <div id="notification-container"></div>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
@@ -13,6 +23,17 @@
   <body>
     <p class="notice"><%= notice %></p> 
     <p class="alert"><%= alert %></p> 
-    <%= yield %>
+    <header id="header">
+      <%= yield :header %>
+    </header>
+    <nav id="navbar">
+      <%= yield :navbar %>
+    </nav>
+    <main id="main" class="w-full bg-white p-2">
+      <%= yield %>
+    </main>
+    <footer id="footer">
+      <%= yield :footer %>
+    </footer>
   </body>
 </html>

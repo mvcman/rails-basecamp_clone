@@ -1,0 +1,13 @@
+<%= turbo_frame_tag sprint do %>
+    <div class="p-4 flex flex-col rounded-md bg-blue-100">
+        <h2 class="font-bold text-gray-800 text-lg"><%= sprint.name %></h2>
+        <p>From: <span class="font-medium text-blue-700"><%= sprint.start_date %></span></p>
+        <p>To: <span class="font-medium text-blue-700"><%= sprint.end_date %></span></p>
+        <p>Created By: <span class="font-medium text-blue-700"><%= sprint.user.full_name %></span></p>
+        <div class="flex items-center space-x-2 pt-4">
+            <%= link_to "Edit Sprint", edit_sprint_path(sprint), class: "py-1 px-4 border border-blue-600 text-sm sm:text-md text-blue-600 rounded-md font-inter font-medium cursor-pointer" %>
+            <%= link_to "View Sprint", sprint_path(sprint), data: { turbo: false }, class: "py-1 px-4 border border-blue-600 text-sm sm:text-md text-blue-600 rounded-md font-inter font-medium cursor-pointer" %>
+            <%= button_to "Destroy", sprint, method: :delete, class: "py-1 px-4 border border-blue-600 bg-blue-600 text-sm sm:text-md text-white rounded-md font-inter font-medium cursor-pointer" %>
+        </div>
+    </div>
+<% end %>

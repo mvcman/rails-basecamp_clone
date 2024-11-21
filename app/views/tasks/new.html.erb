@@ -1,0 +1,5 @@
+<%= turbo_frame_tag @task do %>
+    <div class="">
+        <%= render "tasks/form", sprint: @sprint, task: @task, type: "new" %>
+    </div>
+<% end %>

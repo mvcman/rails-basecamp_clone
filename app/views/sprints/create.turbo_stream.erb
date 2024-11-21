@@ -1,0 +1,2 @@
+<%= turbo_stream.append "sprints", partial: "sprints/sprint", locals: { sprint: @sprint } %>
+<%= turbo_stream.update Sprint.new, "" %>

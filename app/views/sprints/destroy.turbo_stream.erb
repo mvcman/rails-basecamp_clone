@@ -1,0 +1,7 @@
+<%= turbo_stream.remove @sprint %>
+
+<% unless current_user.sprints.exists? %>
+    <%= turbo_stream.update Sprint.new do %>
+        <%= render "sprints/empty_state" %>
+    <% end %>
+<% end %>

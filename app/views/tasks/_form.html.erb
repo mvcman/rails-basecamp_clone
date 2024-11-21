@@ -1,0 +1,26 @@
+<%= form_with(model: [sprint, task], local: true, data: { controller: "task assigneduser"  }, class: "my-2 flex flex-col space-y-2 border border-gray-300 rounded-md") do |form| %>
+    <div class="border-b border-gray-300 px-4 py-1">
+        <%= form.text_field :name, placeholder: "Add your task here", data: { task_target: "name" }, class: "border-0 outline-none ring-0 focus:ring-0 focus:outline-none bg-gray-50 text-gray-900 text-sm sm:text-md rounded-lg block w-full p-2 dark:bg-gray-700 dark:text-white" %>
+    </div>
+    <div class="px-4 flex flex-col py-2">
+        <div class="grid grid-cols-[1fr,5fr] gap-2">
+            <%= form.label :desciption, class: "justify-self-end" %>
+            <%= form.text_area :desciption, placeholder: "Description", data: { task_target: "description" }, class: "border-0 outline-none ring-0 focus:ring-0 focus:outline-none bg-gray-50 text-gray-900 text-sm sm:text-md rounded-lg block w-full p-2 dark:bg-gray-700 dark:text-white focus:outline-none" %>
+        </div>
+        <div class="grid grid-cols-[1fr,5fr] gap-2">
+            <%= form.label :users, "Assign Users", class: "justify-self-end" %>
+            <div class="flex flex-row items-center">
+                <%= form.hidden_field :user_ids, multiple: true, value: task.user_ids.join(","), data: { assigneduser_target: "userIds" } %>
+                <div id="user-chips" data-assigneduser-target="userChips" class="flex flex-row items-center"></div>
+                <div class="relative"> 
+                    <ul class="user-list" id="user-list"></ul>
+                    <input type="text" id="user-search" class="form-control border-0 outline-none ring-0 focus:ring-0 focus:outline-none bg-gray-50 text-gray-900 text-sm sm:text-md rounded-lg block w-full dark:bg-gray-700 dark:text-white" placeholder="Search users..." autocomplete="off" data-assigneduser-target="userSearch" />
+                </div>
+            </div>
+        </div> 
+        <div class="">
+            <%= form.submit type == "new" ? "Add this task" : "Edit this task" , class: "py-1 px-4 bg-blue-600 text-sm sm:text-md text-white rounded-full font-inter font-medium cursor-pointer" %>
+            <%= link_to "Cancel", sprint_path(sprint), class: "py-1 px-4 border border-gray-500 text-sm sm:text-md text-gray-500 rounded-full font-inter font-medium cursor-pointer" %>
+        </div>
+    </div>
+<% end %>

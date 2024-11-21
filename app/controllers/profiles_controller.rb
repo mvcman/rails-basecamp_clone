@@ -10,6 +10,8 @@ class ProfilesController < ApplicationController
 
     def show
       @profile = @user.profile || @user.build_profile
+      # Broadcast the notification
+      ActionCable.server.broadcast("notification_channel", { content: "demo2"})
       render_wizard
     end
   

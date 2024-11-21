@@ -1,0 +1,45 @@
+<%= render "layouts/template_with_header" %>
+<div class="flex items-center justify-between py-4">
+    <h2 class="text-lg font-bold">Sprints</h2>
+    <button data-controller="permission" data-action="permission#requestPermission">
+        Request Notification Permission
+    </button>
+    <%= link_to "Create New", new_sprint_path, data: { turbo_frame: dom_id(Sprint.new) }, class: "border border-blue-600 rounded-md py-1 px-2 text-sm text-blue-600" %>
+</div>
+
+<%= turbo_frame_tag Sprint.new do %>
+    <% if @sprints.none? %>
+        <%= render "sprints/empty_state" %>
+    <% end %>
+<% end %>
+
+<%= turbo_stream_from current_tenant, "sprints" %>
+
+<%= turbo_frame_tag "sprints", class: "w-full grid grid-cols-3 gap-4" do %>
+    <% @sprints.each do |sprint| %>
+        <%= render sprint %>
+    <% end %>
+<% end %>
+
+<h2>Activities</h2>
+<% @activities.each do |activity| %>
+    <div class="border rounded-lg">
+        <% if activity.key == 'sprint.destroy' || activity.key == 'task.destroy' %>
+            <p><%= t('public_activity.sprint.destroy') if activity.trackable_type == 'Sprint' %> <%= t('public_activity.task.destroy') if activity.trackable_type == 'Task' %><%= activity.created_at.to_s %></p>
+        <% else %>
+            <% event = activity.trackable %>
+            <% owner = activity.owner %>
+            <% if event.nil? %>
+                <% next %>
+            <% else %>
+                <div class="">
+                    <h2><%= activity.trackable_type %>: <%= event.name %></h2>
+                    <p><%= activity.created_at %></p>
+                    <p><%= action_name(activity) %></p> 
+                    <p><%= owner.email %>
+                    <%= t("public_activity.#{activity.key}") %></p>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
+<% end %>

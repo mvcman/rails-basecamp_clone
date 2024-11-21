@@ -1,6 +1,27 @@
 <% if user_signed_in? %> 
- <div> Welcome <%= current_user.email %> </div> 
-  <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
+  <%= content_for(:title) { "Main Page" }%>
+  <%= content_for :header do %>
+    <div class="w-full bg-black p-2 flex items-center justify-between">
+      <div class="text-white">Welcome <%= current_user.email %></div> 
+      <h1 class="text-white"><%= @tenant.name %></h1>
+      <div class="flex items-center space-x-2">
+        <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "border border-white rounded-md py-1 px-2 text-sm text-white" %> 
+        <%= button_to "Profile", profiles_path, class: "border border-white rounded-md py-1 px-2 text-sm text-white" %> 
+      </div>
+    </div>
+  <% end %>
+  <%= content_for :navbar do %>
+    <div class="flex items-center space-x-2">
+      <%= link_to "Sprints", sprints_path, class: "" %>
+      <%= link_to "Templates", templates_path, class: "" %>
+      <%= link_to "Standups", standups_path, class: "" %>
+    </div>
+  <% end %>
+  <%= content_for :footer do %>
+    <div class="w-full bg-black text-white flex items-center justify-center p-2">
+      <p>Published by Udyamo.com</p>
+    </div>
+  <% end %>
 <% else %>
   <%= button_to "Sign in", new_user_session_path %> 
 <% end %>

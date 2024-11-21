@@ -1,0 +1,5 @@
+<li class="w-full p-4">
+  <li>
+    <%= link_to notification.event.message, notification.event.url, data: { turbo: false }, class: seen ? "text-gray-500" : "text-blue-500" %>
+  </li>
+</li>
